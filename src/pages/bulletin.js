@@ -7,9 +7,7 @@ import { connect } from "react-redux"
 
 import Logo from "../components/logo"
 import { graphql } from "gatsby"
-import HeadlineSection from "src/components/sections/blog/headline"
 import DiscoverSection from "src/components/sections/blog/discover-section"
-import Post from "src/components/sections/blog/post"
 
 class BulletinPage extends React.Component {
   render() {
@@ -42,24 +40,28 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(BulletinPage)
 
 export const queries = graphql`
-  query bulletin {
-    post: allWordpressPost(
-      filter: { categories: { elemMatch: { slug: { eq: "bulletin" } } } }
-      sort: { fields: date }
-    ) {
-      list: nodes {
-        translations: polylang_translations {
-          lang: polylang_current_lang
-          id
+query bulletin {
+  post: allWpPost(
+    filter: {categories: {nodes: {elemMatch: {slug: {eq: "bulletin"}}}}}
+    sort: {fields: date}
+  ) {
+    list: nodes {
+      translations {
+        lang: language {
           slug
-          title
-          content
-          date
         }
-        image: featured_media {
-          url: source_url
+        id
+        slug
+        title
+        content
+        date
+      }
+      images: featuredImage {
+        node {
+          url: sourceUrl
         }
       }
     }
   }
+}
 `

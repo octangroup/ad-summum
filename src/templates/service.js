@@ -13,7 +13,7 @@ class Service extends Component {
   render() {
     const post = Translator.process(
       this.props.lang,
-      this.props.data.wordpressPost.translations
+      this.props.data.service.translations
     )
     return (
       <Layout>
@@ -29,9 +29,9 @@ class Service extends Component {
                   <div className="w-100 pt-5">
                     <img
                       src={
-                        this.props.data.wordpressPost.image &&
-                        this.props.data.wordpressPost.image.url
-                          ? this.props.data.wordpressPost.image.url
+                        this.props.data.service.image &&
+                        this.props.data.service.image.url
+                          ? this.props.data.service.image.url
                           : null
                       }
                       className="w-50"
@@ -70,15 +70,21 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Service)
 
 export const postQuery = graphql`
-  query($id: String!) {
-    wordpressPost(id: { eq: $id }) {
-      translations: polylang_translations {
-        lang: polylang_current_lang
+  query ($id: String!) {
+    service: wpPost(id: { eq: $id }) {
+      translations {
+        lang: language {
+          slug
+        }
+        id
+        slug
         title
         content
       }
-      image: featured_media {
-        url: source_url
+      images: featuredImage {
+        node {
+          url: sourceUrl
+        }
       }
     }
     site {

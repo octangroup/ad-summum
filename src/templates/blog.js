@@ -67,20 +67,24 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(BlogPage)
 
 export const postQuery = graphql`
-  query($id: String!) {
-    post: wordpressPost(id: { eq: $id }) {
-      translations: polylang_translations {
-        lang: polylang_current_lang
+  query ($id: String!) {
+    post: wpPost(id: { eq: $id }) {
+      translations {
+        lang: language {
+          slug
+        }
         id
         slug
         title
         description: content
-        attributes: acf {
+        attributes: team_member_attributes {
           position
         }
       }
-      image: featured_media {
-        url: source_url
+      images: featuredImage {
+        node {
+          url: sourceUrl
+        }
       }
       date
     }

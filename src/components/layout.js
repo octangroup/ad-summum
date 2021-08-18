@@ -19,29 +19,33 @@ import Footer from "../components/sections/footer"
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
     query siteTitleQuery {
-      site: wordpressSiteMetadata {
+      footer: wpPost(slug: {eq: "footer"}) {
         id
-        name
-        description
-      }
-      footer: wordpressPost(slug: { eq: "footer" }) {
-        id
-        attributes: acf {
+        attributes: footer_attributes {
           address
           email
-          phone_number
+          phoneNumber
         }
       }
-      navbar: allWordpressWpApiMenusMenusItems {
+      navbar: allWpMenu {
         translations: nodes {
           id
           lang: name
           slug
-          items {
-            url
-            title
+          items: menuItems {
+            nodes {
+              title
+              url
+            }
           }
         }
+      }
+      site: wp {
+        generalSettings {
+          description
+          title
+        }
+        id
       }
     }
   `)

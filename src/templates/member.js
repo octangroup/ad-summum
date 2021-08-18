@@ -13,7 +13,7 @@ class Member extends Component {
   render() {
     const member = Translator.process(
       this.props.lang,
-      this.props.data.wordpressPost.translations
+      this.props.data.member.translations
     )
 
     return (
@@ -31,9 +31,9 @@ class Member extends Component {
                   <div className="w-rem-84 h-rem-84 xs:w-rem-54 xs:h-rem-54 md:w-rem-54 md:h-rem-54 sm:w-rem-54 sm:h-rem-54  mx-auto rounded-full overflow-hidden">
                     <img
                       src={
-                        this.props.data.wordpressPost.image &&
-                        this.props.data.wordpressPost.image.url
-                          ? this.props.data.wordpressPost.image.url
+                        this.props.data.member.image &&
+                        this.props.data.member.image.url
+                          ? this.props.data.member.image.url
                           : null
                       }
                       className="clip-full "
@@ -76,20 +76,24 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Member)
 
 export const postQuery = graphql`
-  query($id: String!) {
-    wordpressPost(id: { eq: $id }) {
-      translations: polylang_translations {
-        lang: polylang_current_lang
+  query ($id: String!) {
+    member: wpPost(id: { eq: $id }) {
+      translations {
+        lang: language {
+          slug
+        }
         id
         slug
         name: title
         description: content
-        attributes: acf {
+        attributes: team_member_attributes {
           position
         }
       }
-      image: featured_media {
-        url: source_url
+      images: featuredImage {
+        node {
+          url: sourceUrl
+        }
       }
     }
     site {

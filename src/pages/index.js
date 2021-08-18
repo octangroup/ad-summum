@@ -21,6 +21,7 @@ import MissionCard from "src/components/cards/mission"
 
 class IndexPage extends React.Component {
   render() {
+    console.log(this.pro)
     const mainSection = Translator.process(
       this.props.lang,
       this.props.data.mainSection.translations
@@ -49,6 +50,8 @@ class IndexPage extends React.Component {
       this.props.lang,
       this.props.data.valuesSection.translations
     )
+
+    console.log(mainSection);
 
     return (
       <Layout>
@@ -145,8 +148,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {
@@ -163,8 +166,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {
@@ -181,8 +184,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {
@@ -199,8 +202,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {
@@ -209,7 +212,9 @@ query data {
       }
     }
   }
-  services: allWpPost(filter: {categories: {nodes: {elemMatch: {slug: {eq: "services"}}}}}) {
+  services: allWpPost(
+    filter: {categories: {nodes: {elemMatch: {slug: {eq: "services"}}}}}
+  ) {
     list: nodes {
       translations {
         lang: language {
@@ -224,8 +229,8 @@ query data {
             url: sourceUrl
           }
         }
-        attributes: acf {
-          button_text
+        attributes: general_attributes {
+          text: buttonText
           summary
         }
       }
@@ -239,8 +244,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {
@@ -249,7 +254,9 @@ query data {
       }
     }
   }
-  team: allWpPost(filter: {categories: {nodes: {elemMatch: {slug: {eq: "team-member"}}}}}) {
+  team: allWpPost(
+    filter: {categories: {nodes: {elemMatch: {slug: {eq: "team-member"}}}}}
+  ) {
     members: nodes {
       id
       slug
@@ -261,7 +268,7 @@ query data {
         slug
         name: title
         description: content
-        attributes: acf {
+        attributes: team_member_attributes {
           position
         }
         images: featuredImage {
@@ -272,7 +279,9 @@ query data {
       }
     }
   }
-  strategies: allWpPost(filter: {categories: {nodes: {elemMatch: {slug: {eq: "company-strategy"}}}}}) {
+  strategies: allWpPost(
+    filter: {categories: {nodes: {elemMatch: {slug: {eq: "company-strategy"}}}}}
+  ) {
     list: nodes {
       translations {
         lang: language {
@@ -296,8 +305,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {
@@ -306,7 +315,9 @@ query data {
       }
     }
   }
-  values: allWpPost(filter: {categories: {nodes: {elemMatch: {slug: {eq: "values-section"}}}}}) {
+  values: allWpPost(
+    filter: {categories: {nodes: {elemMatch: {slug: {eq: "values-section"}}}}}
+  ) {
     list: nodes {
       translations {
         lang: language {
@@ -325,8 +336,8 @@ query data {
       id
       title
       description: content
-      button: acf {
-        text: button_text
+      button: general_attributes {
+        text: buttonText
       }
       images: featuredImage {
         node {

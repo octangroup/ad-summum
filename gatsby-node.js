@@ -6,59 +6,67 @@
 
 // You can delete this file if you're not using it
 const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   // query content for WordPress posts
   const results = await graphql(`
     query {
-      services: allWordpressPost(
-        filter: { categories: { elemMatch: { slug: { eq: "services" } } } }
+      services: allWpPost(
+        filter: {
+          categories: { nodes: { elemMatch: { slug: { eq: "services" } } } }
+        }
       ) {
         list: nodes {
           id
           slug
           title
           content
-          image: featured_media {
-            url: source_url
+          images: featuredImage {
+            node {
+              url: sourceUrl
+            }
           }
-          attributes: acf {
-            button_text
+          button: general_attributes {
+            text: buttonText
             summary
           }
         }
       }
-      team: allWordpressPost(
-        filter: { categories: { elemMatch: { slug: { eq: "team-member" } } } }
+      team: allWpPost(
+        filter: {
+          categories: { nodes: { elemMatch: { slug: { eq: "team-member" } } } }
+        }
       ) {
         members: nodes {
           id
           slug
           name: title
           description: content
-          attributes: acf {
+          attributes: team_member_attributes {
             position
           }
-          image: featured_media {
-            url: source_url
+          images: featuredImage {
+            node {
+              url: sourceUrl
+            }
           }
         }
       }
-      bulletin: allWordpressPost(
-        filter: { categories: { elemMatch: { slug: { eq: "bulletin" } } } }
+      bulletin: allWpPost(
+        filter: {
+          categories: { nodes: { elemMatch: { slug: { eq: "bulletin" } } } }
+        }
       ) {
         posts: nodes {
           id
           slug
           name: title
           description: content
-          attributes: acf {
-            position
-          }
-          image: featured_media {
-            url: source_url
+          images: featuredImage {
+            node {
+              url: sourceUrl
+            }
           }
         }
       }
@@ -70,7 +78,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // will be the url for the page
       path: "/service/" + edge.slug,
       // specify the component template of your choice
-      component: slash(serviceTemplate),
+      component: serviceTemplate,
       // In the ^template's GraphQL query, 'id' will be available
       // as a GraphQL variable to query for this posts's data.
       context: {
@@ -85,7 +93,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // will be the url for the page
       path: "/members/" + edge.slug,
       // specify the component template of your choice
-      component: slash(memberTemplate),
+      component: memberTemplate,
       // In the ^template's GraphQL query, 'id' will be available
       // as a GraphQL variable to query for this posts's data.
       context: {
@@ -100,7 +108,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // will be the url for the page
       path: "/bulletin/" + edge.slug,
       // specify the component template of your choice
-      component: slash(blogTemplate),
+      component: blogTemplate,
       // In the ^template's GraphQL query, 'id' will be available
       // as a GraphQL variable to query for this posts's data.
       context: {

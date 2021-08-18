@@ -1,6 +1,6 @@
 import { createStore } from "redux"
 import { persistStore, persistReducer } from "redux-persist"
-import storage from "redux-persist/lib/storage" // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage';
 import reducer from "./reducer"
 
 const persistConfig = {
@@ -8,4 +8,12 @@ const persistConfig = {
   storage,
 }
 const persistedReducer = persistReducer(persistConfig, reducer)
-export default (preloadedState) => createStore(persistedReducer, preloadedState)
+
+export default (preloadedState = {}) => {
+  const store = createStore(
+    persistedReducer,
+    preloadedState // initial state
+  )
+  const persistor = persistStore(store)
+  return { store, persistor }
+}

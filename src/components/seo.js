@@ -21,15 +21,18 @@ function SEO({ description, lang, meta, title }) {
             author
           }
         }
-        wordpress: wordpressSiteMetadata {
-          name
-          description
+        wordpress: wp {
+          generalSettings {
+            description
+            title
+          }
+          id
         }
       }
     `
   )
 
-  const metaDescription = description || data.wordpress.description
+  const metaDescription = description || data.wordpress?.generalSettings?.description
 
   return (
     <Helmet
@@ -37,7 +40,7 @@ function SEO({ description, lang, meta, title }) {
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${data.wordpress.name}`}
+      titleTemplate={`%s | ${data.wordpress?.generalSettings?.title}`}
       meta={[
         {
           name: `description`,

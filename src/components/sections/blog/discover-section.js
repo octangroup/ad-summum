@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Translator from "src/utils/translator"
 import SectionWrapper from "src/components/sections/sectionWrapper"
 import Discover from "src/components/sections/blog/partials/discover"
 

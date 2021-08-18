@@ -4,7 +4,6 @@ import Translator from "src/utils/translator"
 import { connect } from "react-redux"
 import TruncateHtml from "src/components/utilities/TruncateHtml"
 import { Link } from "gatsby"
-import moment from "moment"
 
 class Post extends React.Component {
   render() {

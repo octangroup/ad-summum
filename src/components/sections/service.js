@@ -1,7 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
 import ReactHtmlParser from "react-html-parser"
-import { Link } from "gatsby"
 import Logo from "../logo"
 import SectionTitle from "../section-title"
 
